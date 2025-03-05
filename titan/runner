@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+echo "round $1"
+node ./src/simulate.js $1 1000000
+
+
+
+
