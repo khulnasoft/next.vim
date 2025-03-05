@@ -246,7 +246,7 @@ Result:
 ![tabline](https://i.imgur.com/8i8mKJD.png)
 
 ## ⇁ Social
-For questions about Grapple, there's a #grapple channel on [the Primeagen's Discord](https://discord.gg/khulnasoft) server.
+For questions about Grapple, there's a #grapple channel on [KhulnaSoft's Discord](https://discord.gg/khulnasoft) server.
 * [Discord](https://discord.gg/khulnasoft)
 * [Twitch](https://www.twitch.tv/khulnasoft)
 * [Twitter](https://twitter.com/KhulnaSoft)
