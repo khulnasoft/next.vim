@@ -1,0 +1,62 @@
+{
+    "type": "editor-save",
+    "editorState": {
+        "levelState": {
+            "levels": [
+                {
+                    "levels": [
+                        {
+                            "letterMap": [],
+                            "platforms": [
+                                {
+                                    "selected": null,
+                                    "AABB": {
+                                        "pos": {
+                                            "x": 8,
+                                            "y": 21
+                                        },
+                                        "width": 14,
+                                        "height": 10
+                                    },
+                                    "behaviors": {
+                                        "next": {
+                                            "type": "next-level",
+                                            "toLevel": 0,
+                                            "toLevelPosition": {
+                                                "x": 0,
+                                                "y": 0
+                                            }
+                                        }
+                                    }
+                                }
+                            ],
+                            "initialPosition": {
+                                "x": 24,
+                                "y": 24
+                            }
+                        }
+                    ],
+                    "title": "empty",
+                    "difficulty": 0,
+                    "initialLevel": 0,
+                    "current": 0
+                }
+            ],
+            "current": 0
+        },
+        "debug": false,
+        "tick": 381,
+        "change": 1,
+        "mouse": {
+            "startTime": 1732223319121,
+            "startingEl": null
+        },
+        "outerRect": {
+            "margin": 7,
+            "maxX": 39,
+            "maxY": 31
+        },
+        "selectedElements": []
+    },
+    "path": "./levels/default.json"
+}

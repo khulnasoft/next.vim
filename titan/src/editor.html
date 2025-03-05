@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+	      * {
+		padding: 0;
+		margin: 0;
+        }
+        #editor {
+            display: grid;
+            z-index: 69;
+            grid-template-columns: repeat(42, 1fr);
+            grid-template-rows: repeat(34, 1fr);
+            gap: 0;
+            width: 100vw;
+            height: 100vh;
+            user-select: none;
+        }
+
+        .grid-item {
+            border: 1px solid lightgray; /* Light gray border around each cell */
+            box-sizing: border-box; /* Ensures border is included in the element's size */
+            width: 100%;
+            height: 100%;
+            user-select: none;
+        }
+
+        .grid-item.selected {
+            background-color: #DDD;
+        }
+
+        .platform {
+            position: absolute;
+            box-sizing: border-box;
+            border: 3px solid #3498db;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .platform.lettered {
+            font-size: 0;
+            line-height: 1;
+            font-family: monospace;
+        }
+
+        .platform.powerup {
+            border-color: blue
+        }
+
+        .platform.obstacle {
+            border-color: black
+        }
+
+        .platform.instagib {
+            border-color: red
+        }
+
+        .platform.lazer {
+            border-color: magenta
+        }
+
+        .platform.next {
+            border-color: green
+        }
+
+        .platform.render {
+            background-color: black
+        }
+
+        .platform.render.instagib {
+            background-color: red
+        }
+
+
+        #world-outline {
+            position: absolute;
+            pointer-events: none;
+            border: 3px solid black;
+        }
+
+        .platform-visual {
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .platform-visual.circuit {
+            border: 3px solid #red;
+        }
+
+        .platform.selected {
+            position: absolute;
+            box-sizing: border-box;
+            border: 3px solid #FF4C4C;
+        }
+
+        .grid-item.selected:hover {
+            background-color: #CCC;
+        }
+
+        .grid-item:hover {
+            background-color: #EEE;
+        }
+        /* Flex container for the app */
+
+
+        #app {
+          position: relative;
+          display: flex;
+          height: 100vh; /* Full viewport height */
+          overflow: hidden;
+        }
+
+        #overlay {
+          position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        #loading {
+            display: flex;
+            font-size: 8em;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            pointer-events: none;
+            background-color: #EEE;
+        }
+
+	      canvas {
+        display: none
+        }
+
+	      canvas.show {
+        position: absolute;
+        z-index: 69420;
+		background: #eee;
+		display: block;
+		margin: 0 auto;
+	      }
+
+	      #level-controls {
+        position: absolute;
+        z-index: 69000;
+	      }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <canvas id="game_canvas" width="320" height="240"></canvas>
+            <div id="overlay">
+                <div id="level-controls">
+                    <level-set-controls initial-path="./levels/test.json"></level-set-controls>
+                    <level-select-controls></level-select-controls>
+                </div>
+                <platform-controls></platform-controls>
+                <div id="loading">Jabascript Loading</div>
+            </div>
+            <div id="editor">
+                <div id="world-outline"></div>
+            </div>
+        </div>
+        <template id="level-select-controls">
+<style>
+.level-select-controls {
+    user-select: none;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+    z-index: 69000;
+    background: #eee;
+    display: block;
+    width: 15vw;
+}
+            /* General container styling */
+.levels {
+    user-select: none;
+  display: flex;
+  flex-direction: column; /* Ensure vertical alignment */
+  gap: 5px; /* Add spacing between divs */
+  padding: 0;
+  margin: 0;
+}
+
+/* Individual item styling */
+.level {
+  padding: 10px 15px; /* Add padding for better spacing */
+  border: 1px solid #ccc; /* Add a light border around items */
+  cursor: pointer; /* Indicate items are clickable */
+  font-size: 16px; /* Standard font size */
+  background-color: #fff; /* Default background color */
+  transition: background-color 0.2s ease; /* Smooth background transition */
+}
+
+/* Selected item styling */
+.level.selected {
+  background-color: #d9e8f5; /* Light bluish background */
+  color: #333; /* Text color for contrast */
+  font-weight: bold; /* Emphasize selected items */
+}
+</style>
+            <div class="level-select-controls">
+                <label>Levels</label>
+                <div class="levels">
+                    None
+                </div>
+                <button id="new-level">New Level</button>
+            </div>
+        </template>
+        <template id="level-set-controls">
+<style>
+.level-set-controls {
+            user-select: none;
+    position: relative;
+    align-items: center;
+    gap: 0.3em;
+    z-index: 69000;
+    background: #eee;
+    display: block;
+    width: 100vw;
+}
+</style>
+            <div class="level-set-controls">
+                <label>Path</label> <input id="level-path" placeholder="path-to-file"></input>
+                <label>Title</label> <input id="level-set-title" placeholder="level name"></input>
+                <label>Difficulty</label> <input id="level-set-diff" placeholder="level diff"></input>
+                <label>X</label><input id="level-set-x" value="0"></input>
+                <label>Y</label><input id="level-set-y" value="0"></input>
+                <label>Initial</label><input id="level-set-initial" min="0" max="69" type="number" value="0"></input>
+
+                <button id="load-level-set">Load</button>
+                <button id="save-level-set">Save</button>
+                <button id="delete-level-set">Delete</button>
+            </div>
+        </template>
+        <template id="platform-controls">
+<style>
+
+.platform-controls.show {
+    position: absolute;
+    display: flex;
+    z-index: 69420;
+}
+
+.platform-controls {
+    display: none;
+    align-items: center;
+    font-size: 2em;
+    gap: 1em;
+    padding: 0.5em;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 50%;
+}
+
+.platform-controls button {
+    padding: 0.2em 0.5em;
+    font-size: 0.8em;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.platform-controls button:hover {
+    background-color: #45a049;
+}
+
+.platform-controls .type {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1em;
+}
+
+.platform-controls .type .title {
+    font-weight: bold;
+    margin-right: 0.5em;
+}
+
+.platform-controls .type div {
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+}
+
+.platform-controls input[type="checkbox"] {
+    width: auto;
+    height: auto;
+    cursor: pointer;
+}
+
+.platform-controls input[type="number"] {
+    width: 3em;
+    font-size: 0.8em;
+    padding: 0.2em;
+}
+.platform-controls input[type="number"]::-webkit-outer-spin-button,
+.platform-controls input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* For Firefox */
+.platform-controls input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.platform-controls label {
+    font-size: 0.8em;
+}
+
+.platform-controls .circuit,
+.platform-controls .next-level {
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+}
+
+.platform-controls .circuit label,
+.platform-controls .next-level label {
+    font-size: 0.8em;
+}
+</style>
+            <div class="platform-controls">
+                <div class="type">
+                    <div class="id"> </div>
+                    <div class="obstacle">
+                        <input id="obstacle" type="checkbox"></input> <label>O</label><br>
+                    </div>
+                    <div class="instagib">
+                        <input id="instagib" type="checkbox"></input> <label>I</label><br>
+                    </div>
+                    <div class="circuit">
+                        <input id="circuit" type="checkbox"></input> <label>C</label><br>
+                            <!-- REMINDER : outerRect -->
+                        <label></label> <input id="circuit-sx" value="0"></input> <input id="circuit-sy" value="0"></input> <br>
+                        <label>-&gt;</label> <input id="circuit-ex" value="0"></input> <input id="circuit-ey" value="0"></input> <br>
+                    </div>
+                    <div class="next-level">
+                        <input id="next-level" type="checkbox"></input> <label>N</label><br>
+                        <label>#</label> <input id="nl-id" min="0" max="1000" type="number" value="0"></input><br>
+                        <input id="next-x" value="0"></input> <input id="next-y" value="0"></input>
+                    </div>
+                    <div class="render">
+                        <input id="render" type="checkbox"></input> <label>R</label><br>
+                    </div>
+                    <div class="portal">
+                        <input id="portal" type="checkbox"></input> <label>P</label><br>
+                        <label>To</label> <input id="portal-to" min="0" max="1000" type="number" value="0"></input>
+                        <label>Norm</label><input id="portal-x" value="0"></input> <input id="portal-y" value="0"></input>
+                    </div>
+                    <div class="lettered">
+                        <input id="lettered" name="lettered" type="checkbox"></input> <label>L</label><br>
+                        <label>Letter</label> <input name="letter" id="letter" value="a"></input>
+                    </div>
+                    <div class="lazer">
+                        <input id="lazer" name="lazer" type="checkbox"></input> <label>Lazer</label><br>
+                    </div>
+                    <div class="powerup">
+                        <input id="powerUp" name="powerUp" type="checkbox"></input> <label>PowerUp</label><br>
+                        <input id="pu-letter" name="pu-letter" type="text"></input> <label>L</label><br>
+                        <input id="pu-startr" name="pu-startr" type="text"></input> <label>S</label><br>
+                        <input id="pu-endr" name="pu-endr" type="text"></input> <label>E</label><br>
+                        <input id="pu-rspeed" name="pu-rspeed" type="text"></input> <label>RS</label><br>
+                        <input id="pu-action" name="pu-action" type="text"></input> <label>Action</label><br>
+                        <input id="pu-aspeed" name="pu-aspeed" type="text"></input> <label>AS</label><br>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <script type="module" src="./editor/app.js"></script>
+    </body>
+</html>
