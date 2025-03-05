@@ -8,7 +8,7 @@ local next = require("next")
 local next_mark = require("next.mark")
 
 local function prepare_results(list)
-    local next_mark_list = {}  -- Renamed from `next` to avoid shadowing
+    local next_mark_list = {} -- Renamed from `next` to avoid shadowing
     for idx = 1, #list do
         if list[idx].filename ~= "" then
             list[idx].index = idx
