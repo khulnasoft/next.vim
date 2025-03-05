@@ -1,14 +1,19 @@
-if VimAPMRequired then
-    require("next-apm"):clear()
+local function R(module)
+    package.loaded[module] = nil
+    return require(module)
 end
 
+local NextAPMRequired = _G.NextAPMRequired
+if NextAPMRequired then
+    require("next-apm"):clear()
+end
 R("next-apm")
 
 local apm = require("next-apm")
 apm:setup({
     reporter = {
         type = "network",
-    }
+    },
 })
 
 --[[
@@ -17,7 +22,7 @@ vim.on_key(function(key)
 end)
 
 
-vim.api.nvim_feedkeys("23jci{hello worldkdi(itrue", "t", false)
+vim.api.nvim_feedkeys("23jci{hello worldkdi(itrue", "t", false)
 
 --[[
 hello world

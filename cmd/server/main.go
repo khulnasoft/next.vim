@@ -9,10 +9,10 @@ import (
 )
 
 func main() {
-	tcpVimAPMServer()
+	tcpNextAPMServer()
 }
 
-func tcpVimAPMServer() {
+func tcpNextAPMServer() {
 	// Listen for incoming connections on port 8080
 	ln, err := net.Listen("tcp", ":6112")
 	if err != nil {
@@ -30,11 +30,11 @@ func tcpVimAPMServer() {
 		}
 
 		// Handle the connection in a new goroutine
-		go handleVimAPMConnection(conn)
+		go handleNextAPMConnection(conn)
 	}
 }
 
-func handleVimAPMConnection(conn net.Conn) {
+func handleNextAPMConnection(conn net.Conn) {
 	// Close the connection when we're done
 	defer conn.Close()
 

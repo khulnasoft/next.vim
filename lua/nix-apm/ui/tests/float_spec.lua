@@ -2,7 +2,7 @@ local eq = assert.are.same
 local utils = require("next-apm.tests.utils")
 local float = require("next-apm.ui.float")
 
-describe("harpoon", function()
+describe("next", function()
     before_each(function()
         utils.clear_memory()
         float = require("next-apm.ui.float")

@@ -3,10 +3,10 @@ cache = true
 codes = true
 
 globals = {
-    "HarpoonConfig",
-    "Harpoon_bufh",
-    "Harpoon_win_id",
-    "Harpoon_cmd_win_id",
-    "Harpoon_cmd_bufh",
+    "NextConfig",
+    "Next_bufh",
+    "Next_win_id",
+    "Next_cmd_win_id",
+    "Next_cmd_bufh",
 }
 read_globals = { "vim" }

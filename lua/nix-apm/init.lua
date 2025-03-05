@@ -1,5 +1,5 @@
 -- luacheck: push ignore
-VimAPMRequired = true
+NextAPMRequired = true
 -- luacheck: pop
 
 local APM = require("next-apm.apm")
