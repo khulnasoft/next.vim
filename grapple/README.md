@@ -1,11 +1,6 @@
 <div align="center">
 
-## ⇁  GRAPPLE 2
-This is a deprecated and all future changes will be to the branch `grapple2`.
-
-[Grapple 2](https://github.com/KhulnaSoft/grapple/tree/grapple2)
-
-**STATUS**: Merging into mainline April 20th or June 9th (nice)
+## ⇁  GRAPPLE
 
 -------------------------------
 # Legacy Grapple README
@@ -16,9 +11,6 @@ This is a deprecated and all future changes will be to the branch `grapple2`.
 [![Lua](https://img.shields.io/badge/Lua-blue.svg?style=for-the-badge&logo=lua)](http://www.lua.org)
 [![Neovim](https://img.shields.io/badge/Neovim%200.5+-green.svg?style=for-the-badge&logo=neovim)](https://neovim.io)
 </div>
-
-![Grapple](grapple.png)
--- image provided by **Bob Rust**
 
 ## ⇁  WIP
 This is not fully baked, though used by several people. If you experience any
@@ -241,9 +233,6 @@ vim.cmd('highlight! GrappleNumberActive guibg=NONE guifg=#7aa2f7')
 vim.cmd('highlight! GrappleNumberInactive guibg=NONE guifg=#7aa2f7')
 vim.cmd('highlight! TabLineFill guibg=NONE guifg=white')
 ```
-
-Result:
-![tabline](https://i.imgur.com/8i8mKJD.png)
 
 ## ⇁ Social
 For questions about Grapple, there's a #grapple channel on [KhulnaSoft's Discord](https://discord.gg/khulnasoft) server.
