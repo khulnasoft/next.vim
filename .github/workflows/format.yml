@@ -6,6 +6,10 @@ jobs:
     format:
         name: Stylua
         runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: grapple # Set the working directory
+
         steps:
             - uses: actions/checkout@v2
             - run: date +%W > weekly
